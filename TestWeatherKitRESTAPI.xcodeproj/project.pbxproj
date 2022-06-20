@@ -12,6 +12,9 @@
 		92B4F6462860CA8800827130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6452860CA8800827130 /* Assets.xcassets */; };
 		92B4F6492860CA8800827130 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6482860CA8800827130 /* Preview Assets.xcassets */; };
 		92B4F6532860CD2E00827130 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6522860CD2E00827130 /* README.md */; };
+		92B4F6562860E6C100827130 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 92B4F6552860E6C100827130 /* SwiftJWT */; };
+		92B4F6582860E7C800827130 /* CurrentWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6572860E7C800827130 /* CurrentWeatherModel.swift */; };
+		92B4F65A2860E85500827130 /* WeatherKitRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,8 @@
 		92B4F6452860CA8800827130 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92B4F6482860CA8800827130 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		92B4F6522860CD2E00827130 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		92B4F6572860E7C800827130 /* CurrentWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherModel.swift; sourceTree = "<group>"; };
+		92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherKitRESTAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92B4F6562860E6C100827130 /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +62,8 @@
 			children = (
 				92B4F6412860CA8600827130 /* TestWeatherKitRESTAPIApp.swift */,
 				92B4F6432860CA8600827130 /* ContentView.swift */,
+				92B4F6572860E7C800827130 /* CurrentWeatherModel.swift */,
+				92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */,
 				92B4F6452860CA8800827130 /* Assets.xcassets */,
 				92B4F6472860CA8800827130 /* Preview Content */,
 			);
@@ -86,6 +94,9 @@
 			dependencies = (
 			);
 			name = TestWeatherKitRESTAPI;
+			packageProductDependencies = (
+				92B4F6552860E6C100827130 /* SwiftJWT */,
+			);
 			productName = TestWeatherKitRESTAPI;
 			productReference = 92B4F63E2860CA8600827130 /* TestWeatherKitRESTAPI.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +125,9 @@
 				Base,
 			);
 			mainGroup = 92B4F6352860CA8600827130;
+			packageReferences = (
+				92B4F6542860E6C100827130 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+			);
 			productRefGroup = 92B4F63F2860CA8600827130 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -143,6 +157,8 @@
 			files = (
 				92B4F6442860CA8600827130 /* ContentView.swift in Sources */,
 				92B4F6422860CA8600827130 /* TestWeatherKitRESTAPIApp.swift in Sources */,
+				92B4F65A2860E85500827130 /* WeatherKitRESTAPI.swift in Sources */,
+				92B4F6582860E7C800827130 /* CurrentWeatherModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +304,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -317,7 +333,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -343,6 +359,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		92B4F6542860E6C100827130 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		92B4F6552860E6C100827130 /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92B4F6542860E6C100827130 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 92B4F6362860CA8600827130 /* Project object */;
 }
