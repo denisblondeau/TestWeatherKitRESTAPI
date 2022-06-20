@@ -20,4 +20,5 @@ You need to install the Swift-JWT package - needed to generate a JSON Web Token 
 
 This demo does not use the header id to generate the JWT - even though it is part of the WetherKit REST API requirements. However, the demo still works without that id in the header. That id header cannot be used with the SwiftJWT package because SwiftJWT does not currently support custom headers. 
 
+If everything works correctly, you will get a screen output like the one in the image included in this project - SampleOutput.jpg
 
