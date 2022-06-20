@@ -18,19 +18,14 @@ class CurrentWeatherModel: ObservableObject {
     }
     
     // Apple Developer's Team ID.
-    private let teamID = "4QRJCR224P"
+    private let teamID = "YOUR TEAMID"
     // WeatherKit Service ID
-    private let serviceID = "com.denisblondeau.weatherkit-client"
+    private let serviceID = "YOUR SERVICEID"
     // WeatherKit Key ID.
-    private let keyID = "4BK5BFMJGK"
+    private let keyID = "YOUR WEATHERKIT KEY ID"
     // Private Key extracted from the .p8 file.
     private let secret = """
-    -----BEGIN PRIVATE KEY-----
-    MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg4lMELg2AxQCrcqo5
-    OEIMnlZRXLvpYrw6rPQlqdwRFI2gCgYIKoZIzj0DAQehRANCAATdAWy/Fx9/tIO+
-    MA11Sg2zcg4f2GBe8C6rBhZlzIVJW+FFfdtPJ6qeR0SVsjPQ3BkAZdOXrWs8oPO1
-    3XgxhRmP
-    -----END PRIVATE KEY-----
+    PASTE EVERYTHING FROM YOUR .P8 FILE HERE
     """
     
     @Published private(set) var weatherData: CurrentWeather?
