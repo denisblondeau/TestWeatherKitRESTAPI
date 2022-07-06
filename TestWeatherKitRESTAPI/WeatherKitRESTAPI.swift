@@ -332,12 +332,16 @@ enum MoonPhase: String, Codable {
     case firstQuarter
     /// The entire disc of the moon is visible.
     case full
-    ///  More than half of the moon is visible, and decreasing in size.
+    /// More than half of the moon is visible, and decreasing in size.
     case waningGibbous
-    ///  Approximately half of the moon is visible, and decreasing in size.
+    /// Approximately half of the moon is visible, and decreasing in size.
     case thirdQuarter
-    ///  A crescent-shaped sliver of the moon is visible, and decreasing in size.
+    /// A crescent-shaped sliver of the moon is visible, and decreasing in size.
     case waningCrescent
+    /// A crescent-shaped sliver of the moon is visible, and increasing in size.
+    case waxingCrescent
+    /// More than half of the moon is visible, and increasing in size.
+    case waxingGibbous
 }
 
 // MARK: - PrecipitationType - Ref: https://developer.apple.com/documentation/weatherkitrestapi/precipitationtype

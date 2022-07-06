@@ -9,7 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var model = CurrentWeatherModel()
+    @StateObject var model = WeatherModel()
+    private let weatherAPIDateFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .full
+        result.timeStyle = .medium
+        result.locale = Locale.current
+        result.timeZone = TimeZone.current
+        return result
+    }()
     
     
     var body: some View {
@@ -27,27 +35,38 @@ struct ContentView: View {
             
             if let currentWeather = model.weatherData?.currentWeather {
                 
-                Text("Current temperature at Apple Park: \(String(currentWeather.temperature))")
+                Text("Weather data is current as of:\n \(weatherAPIDateFormatter.string(from: currentWeather.asOf))\n(Local Time)")
+                    .multilineTextAlignment(.center)
                     .padding()
+                
+                Text("Current temperature at Apple Park:\n \(String(currentWeather.temperature))")
+                    .multilineTextAlignment(.center)
+                    .padding()
+                
             }
             
             if let forecastDaily = model.weatherData?.forecastDaily {
-                Text("Tomorrow's condition code: \(forecastDaily.days[1].conditionCode)")
+                Text("Tomorrow's condition code:\n \(forecastDaily.days[1].conditionCode)")
+                    .multilineTextAlignment(.center)
                     .padding()
             }
-           
+            
             if let forecastHourly = model.weatherData?.forecastHourly {
-                Text("UV Index at 00h00: \(forecastHourly.hours[0].uvIndex)")
+                Text("UV Index at 00h00:\n \(forecastHourly.hours[0].uvIndex)")
+                    .multilineTextAlignment(.center)
                     .padding()
             }
             
             if let forecastNextHour = model.weatherData?.forecastNextHour, (forecastNextHour.summary.count > 0) {
-                Text("Type of precipitation forecasted for the next hour:  \(forecastNextHour.summary[0].condition.rawValue)")
+                Text("Type of precipitation forecasted for the next hour:\n \(forecastNextHour.summary[0].condition.rawValue)")
+                    .multilineTextAlignment(.center)
                     .padding()
             }
             
             if let weatherAlerts = model.weatherData?.weatherAlerts {
-                Text("Description of first weather alert: \(weatherAlerts.alerts[0].description)")
+                Text("Description of first weather alert:\n\(weatherAlerts.alerts[0].description)")
+                    .multilineTextAlignment(.center)
+                    .padding()
             }
             
             HStack {
@@ -58,6 +77,9 @@ struct ContentView: View {
             if let attributionURL = model.weatherData?.currentWeather?.metadata.attributionURL {
                 Link("Legal - Data Sources", destination: URL(string: attributionURL)!)
             }
+        }
+        .task {
+            await model.getWeatherData()
         }
     }
 }
