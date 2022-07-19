@@ -75,7 +75,8 @@ class WeatherModel: ObservableObject {
             }
             sets = String(sets.dropLast())
             
-            guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/en-US/\(latitude)/\(longitude)?countryCode=US&dataSets=\(sets)&timezone=PDT") else {
+            // *** REST API documentation indicates that "countryCode" is to be used as query parameter but "country" is really the right keyword. ***
+            guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/en-US/\(latitude)/\(longitude)?country=US&dataSets=\(sets)&timezone=America/Los_Angeles") else {
                 print("Error: Cannot generate a valid URL.")
                 return
             }

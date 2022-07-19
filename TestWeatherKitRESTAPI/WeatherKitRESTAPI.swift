@@ -452,10 +452,15 @@ enum Urgency: String, Codable {
 // MARK: - DataSet
 /// Data sets available for the specified location.
 enum DataSet: String, Codable {
+    /// The current weather for the requested location.
     case currentWeather
+    /// The daily forecast for the requested location.
     case forecastDaily
+    /// The hourly forecast for the requested location.
     case forecastHourly
+    /// The next hour forecast for the requested location.
     case forecastNextHour
+    /// Weather alerts for the requested location.
     case weatherAlerts
 }
 

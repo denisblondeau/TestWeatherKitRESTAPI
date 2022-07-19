@@ -63,10 +63,14 @@ struct ContentView: View {
                     .padding()
             }
             
-            if let weatherAlerts = model.weatherData?.weatherAlerts {
-                Text("Description of first weather alert:\n\(weatherAlerts.alerts[0].description)")
+            if let alerts = model.weatherData?.weatherAlerts?.alerts, alerts.count > 0 {
+                Text("Description of first weather alert:\n\(alerts[0].description)")
                     .multilineTextAlignment(.center)
                     .padding()
+            } else {
+                Text("There are no weather alerts.")
+                    .padding()
+                
             }
             
             HStack {
