@@ -63,16 +63,12 @@ struct ContentView: View {
                     .padding()
             }
             
-            if let alerts = model.weatherData?.weatherAlerts?.alerts, alerts.count > 0 {
-                Text("Description of first weather alert:\n\(alerts[0].description)")
-                    .multilineTextAlignment(.center)
-                    .padding()
-            } else {
-                Text("There are no weather alerts.")
+            if let detailsURL = model.weatherData?.weatherAlerts?.detailsUrl {
+                Link("Weather Alerts", destination: URL(string: detailsURL)!)
                     .padding()
                 
             }
-            
+           
             HStack {
                 Image(systemName: "applelogo")
                 Text("Weather")

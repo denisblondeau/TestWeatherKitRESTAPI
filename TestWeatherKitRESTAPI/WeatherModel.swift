@@ -17,18 +17,17 @@ class WeatherModel: ObservableObject {
         let sub: String
     }
     
-            // Apple Developer's Team ID.
-            private let teamID = "YOUR TEAMID"
-            // WeatherKit Service ID
-            private let serviceID = "YOUR SERVICEID"
-            // WeatherKit Key ID.
-            private let keyID = "YOUR WEATHERKIT KEY ID"
-            // Private Key extracted from the .p8 file.
-            private let secret = """
+    // Apple Developer's Team ID.
+    private let teamID = "YOUR TEAMID"
+    // WeatherKit Service ID
+    private let serviceID = "YOUR SERVICEID"
+    // WeatherKit Key ID.
+    private let keyID = "YOUR WEATHERKIT KEY ID"
+    // Private Key extracted from the .p8 file.
+    private let secret = """
             PASTE EVERYTHING FROM YOUR .P8 FILE HERE
            """
     
-   
     
     @Published private(set) var availableDataSets: Set<DataSet>?
     @Published private(set) var weatherData: Weather?
@@ -61,38 +60,54 @@ class WeatherModel: ObservableObject {
         urlRequest.httpMethod = "GET"
         urlRequest.setValue("Bearer \(signedJWT)", forHTTPHeaderField: "Authorization")
         
-        if let dataSets =  try? await getData(for: urlRequest, type: availableDataSets) {
-            DispatchQueue.main.async {
-                self.availableDataSets = dataSets
-            }
-            
-            
-            // Obtain weather data for the specified location and all the available data sets.
-            var sets = ""
-            for dataset in dataSets {
-                sets += dataset.rawValue + ","
+        var sets = ""
+        
+        do {
+            if let dataSets =  try await getData(for: urlRequest, type: availableDataSets) {
+                DispatchQueue.main.async {
+                    self.availableDataSets = dataSets
+                }
+                
+                // Obtain weather data for the specified location and all the available data sets.
+                for dataset in dataSets {
+                    sets += dataset.rawValue + ","
+                    
+                }
+                sets = String(sets.dropLast())
                 
             }
-            sets = String(sets.dropLast())
             
-            // *** REST API documentation indicates that "countryCode" is to be used as query parameter but "country" is really the right keyword. ***
-            guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/en-US/\(latitude)/\(longitude)?country=US&dataSets=\(sets)&timezone=America/Los_Angeles") else {
-                print("Error: Cannot generate a valid URL.")
-                return
-            }
-            
-            urlRequest.url = url
-            
-            // Get the data and also print out its JSON representation to the console.
-            if let weather = try? await getData(for: urlRequest, type: self.weatherData, printJSON: true) {
+        } catch {
+            print ("*** Error retrieving weather data sets: \(error.localizedDescription)")
+        }
+        
+        // *** REST API documentation indicates that "countryCode" is to be used as query parameter but "country" is really the right keyword. ***
+        guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/en-US/\(latitude)/\(longitude)?country=US&dataSets=\(sets)&timezone=America/Los_Angeles") else {
+            print("Error: Cannot generate a valid URL.")
+            return
+        }
+        
+        urlRequest.url = url
+        
+        // Get the data and also print out its JSON representation to the console.
+        
+        do {
+            if let weather = try await getData(for: urlRequest, type: self.weatherData, printJSON: true) {
                 
                 DispatchQueue.main.async {
                     self.weatherData = weather
                 }
             }
+            
+        } catch {
+            
+            print ("*** Error retrieving weather data: \(error.localizedDescription)")
+            
         }
+        
     }
 }
+
 
 
 // Retrieve and convert web data to an object.
