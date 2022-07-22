@@ -19,7 +19,6 @@ struct ContentView: View {
         return result
     }()
     
-    
     var body: some View {
         VStack {
             
@@ -39,7 +38,7 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
                     .padding()
                 
-                Text("Current temperature at Apple Park:\n \(String(currentWeather.temperature))")
+                Text("Current temperature in \(model.cityName):\n \(String(currentWeather.temperature))")
                     .multilineTextAlignment(.center)
                     .padding()
                 

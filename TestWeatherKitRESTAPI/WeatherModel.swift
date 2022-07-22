@@ -5,6 +5,7 @@
 //  Created by Denis Blondeau on 2022-06-20.
 //
 
+import Combine
 import Foundation
 import SwiftJWT
 
@@ -28,86 +29,92 @@ class WeatherModel: ObservableObject {
             PASTE EVERYTHING FROM YOUR .P8 FILE HERE
            """
     
+   
     
     @Published private(set) var availableDataSets: Set<DataSet>?
     @Published private(set) var weatherData: Weather?
+    @Published private(set) var cityName = ""
+    
+    private let locationManager = LocationManager()
     
     func getWeatherData() async {
         
-        let header = Header(kid: keyID)
-        let claims = MyClaims(iss: teamID, iat: Date(), exp: Date(timeIntervalSinceNow: 60), sub: serviceID)
-        
-        // Create and sign the JSON Web Token (JWT).
-        var myJWT = JWT(header: header, claims: claims)
-        let privateKey = Data(secret.utf8)
-        let signer = JWTSigner.es256(privateKey: privateKey)
-        guard let signedJWT = try? myJWT.sign(using: signer) else {
-            print("Error: Cannot sign JSON Web Token.")
-            return
-        }
-        
-        // Apple Park location.
-        let latitude = "37.334"
-        let longitude = "-122.008"
-        
-        // Determine the data sets available for the specified location.
-        guard let url = URL(string: "https://weatherkit.apple.com/api/v1/availability/\(latitude)/\(longitude)?country=US") else {
-            print("Error: Cannot generate a valid URL.")
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = "GET"
-        urlRequest.setValue("Bearer \(signedJWT)", forHTTPHeaderField: "Authorization")
-        
-        var sets = ""
-        
         do {
-            if let dataSets =  try await getData(for: urlRequest, type: availableDataSets) {
-                DispatchQueue.main.async {
-                    self.availableDataSets = dataSets
-                }
-                
-                // Obtain weather data for the specified location and all the available data sets.
-                for dataset in dataSets {
-                    sets += dataset.rawValue + ","
+            let locationData = try await locationManager.getLocationData()
+            DispatchQueue.main.async {
+                self.cityName = locationData.city
+            }
+            await processLocationData(locationData)
+        } catch {
+            print(error)
+        }
+        
+        func processLocationData(_ locationData: LocationData) async {
+            let header = Header(kid: keyID)
+            let claims = MyClaims(iss: teamID, iat: Date(), exp: Date(timeIntervalSinceNow: 60), sub: serviceID)
+            
+            // Create and sign the JSON Web Token (JWT).
+            var myJWT = JWT(header: header, claims: claims)
+            let privateKey = Data(secret.utf8)
+            let signer = JWTSigner.es256(privateKey: privateKey)
+            guard let signedJWT = try? myJWT.sign(using: signer) else {
+                print("Error: Cannot sign JSON Web Token.")
+                return
+            }
+            
+            // Determine the data sets available for the specified location.
+            guard let url = URL(string: "https://weatherkit.apple.com/api/v1/availability/\(locationData.latitude)/\(locationData.longitude)?country=\(locationData.countryCode)") else {
+                print("Error: Cannot generate a valid URL.")
+                return
+            }
+            
+            var urlRequest = URLRequest(url: url)
+            urlRequest.httpMethod = "GET"
+            urlRequest.setValue("Bearer \(signedJWT)", forHTTPHeaderField: "Authorization")
+            
+            var sets = ""
+            
+            do {
+                if let dataSets =  try await getData(for: urlRequest, type: availableDataSets) {
+                    DispatchQueue.main.async {
+                        self.availableDataSets = dataSets
+                    }
                     
+                    // Obtain weather data for the specified location and all the available data sets.
+                    for dataset in dataSets {
+                        sets += dataset.rawValue + ","
+                    }
+                    sets = String(sets.dropLast())
                 }
-                sets = String(sets.dropLast())
                 
+            } catch {
+                print ("*** Error retrieving weather data sets: \(error.localizedDescription)")
             }
             
-        } catch {
-            print ("*** Error retrieving weather data sets: \(error.localizedDescription)")
-        }
-        
-        // *** REST API documentation indicates that "countryCode" is to be used as query parameter but "country" is really the right keyword. ***
-        guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/en-US/\(latitude)/\(longitude)?country=US&dataSets=\(sets)&timezone=America/Los_Angeles") else {
-            print("Error: Cannot generate a valid URL.")
-            return
-        }
-        
-        urlRequest.url = url
-        
-        // Get the data and also print out its JSON representation to the console.
-        
-        do {
-            if let weather = try await getData(for: urlRequest, type: self.weatherData, printJSON: true) {
-                
-                DispatchQueue.main.async {
-                    self.weatherData = weather
-                }
+            // *** REST API documentation indicates that "countryCode" is to be used as query parameter but "country" is really the right keyword. ***
+            guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/\(locationData.languageTag)/\(locationData.latitude)/\(locationData.longitude)?country=\(locationData.countryCode)&dataSets=\(sets)&timezone=\(locationData.timezoneName)") else {
+                print("Error: Cannot generate a valid URL.")
+                return
             }
             
-        } catch {
+            urlRequest.url = url
             
-            print ("*** Error retrieving weather data: \(error.localizedDescription)")
+            // Get the data and also print out its JSON representation to the console.
             
+            do {
+                if let weather = try await getData(for: urlRequest, type: self.weatherData, printJSON: true) {
+                    
+                    DispatchQueue.main.async {
+                        self.weatherData = weather
+                    }
+                }
+            } catch {
+                
+                print ("*** Error retrieving weather data: \(error.localizedDescription)")
+            }
         }
-        
     }
 }
-
 
 
 // Retrieve and convert web data to an object.

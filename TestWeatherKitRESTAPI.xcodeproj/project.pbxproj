@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		92814A772875D97B000B8540 /* SampleOutput.png in Resources */ = {isa = PBXBuildFile; fileRef = 92814A762875D97B000B8540 /* SampleOutput.png */; };
+		928B9718288AF9EF003AFC38 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928B9717288AF9EF003AFC38 /* LocationManager.swift */; };
 		92B4F6422860CA8600827130 /* TestWeatherKitRESTAPIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6412860CA8600827130 /* TestWeatherKitRESTAPIApp.swift */; };
 		92B4F6442860CA8600827130 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6432860CA8600827130 /* ContentView.swift */; };
 		92B4F6462860CA8800827130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6452860CA8800827130 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		92814A762875D97B000B8540 /* SampleOutput.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleOutput.png; sourceTree = "<group>"; };
+		928B9717288AF9EF003AFC38 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		92B4F63E2860CA8600827130 /* TestWeatherKitRESTAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestWeatherKitRESTAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92B4F6412860CA8600827130 /* TestWeatherKitRESTAPIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWeatherKitRESTAPIApp.swift; sourceTree = "<group>"; };
 		92B4F6432860CA8600827130 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				92B4F6432860CA8600827130 /* ContentView.swift */,
 				92B4F6572860E7C800827130 /* WeatherModel.swift */,
 				92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */,
+				928B9717288AF9EF003AFC38 /* LocationManager.swift */,
 				92B4F6452860CA8800827130 /* Assets.xcassets */,
 				92B4F6472860CA8800827130 /* Preview Content */,
 			);
@@ -161,6 +164,7 @@
 			files = (
 				92B4F6442860CA8600827130 /* ContentView.swift in Sources */,
 				92B4F6422860CA8600827130 /* TestWeatherKitRESTAPIApp.swift in Sources */,
+				928B9718288AF9EF003AFC38 /* LocationManager.swift in Sources */,
 				92B4F65A2860E85500827130 /* WeatherKitRESTAPI.swift in Sources */,
 				92B4F6582860E7C800827130 /* WeatherModel.swift in Sources */,
 			);
@@ -294,6 +298,7 @@
 				DEVELOPMENT_TEAM = 4QRJCR224P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Access is required to get weather data for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -324,6 +329,7 @@
 				DEVELOPMENT_TEAM = 4QRJCR224P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Access is required to get weather data for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
