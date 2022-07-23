@@ -80,6 +80,11 @@ struct ContentView: View {
         .task {
             await model.getWeatherData()
         }
+        .alert("Access To This Device's Location Has Been Denied", isPresented: $model.authorizationDenied) {
+           
+        } message: {
+            Text("You need to authorize TestWeatherkitRESTAPI to access this device's location (Go to Settings > Privacy > Location Services)")
+        }
     }
 }
 
