@@ -9,12 +9,14 @@
 import Combine
 import CoreLocation
 
-
 final class LocationManager: NSObject {
     
     private typealias LocationDataCheckedThrowingContinuation = CheckedContinuation<LocationData, Error>
     private lazy var manager = CLLocationManager()
     private var locationDataCheckedThrowingContinuation: LocationDataCheckedThrowingContinuation?
+    private var authorizationStatusPromise: ((Result<CLAuthorizationStatus, Never>) -> Void)?
+    /// Set to true if the liocation access authorization stauts for this devices is not determined.
+    private var notDeterminedAuthStatus = false
     
     func getLocationData() async throws -> LocationData {
         
@@ -31,8 +33,19 @@ final class LocationManager: NSObject {
             self.manager.startUpdatingLocation()
         })
     }
+    
+    
+    ///  Authorization status regarding acess to device's location (coordinates).
+    /// - Returns: Authorization status.
+    func getAuthorizationStatus() -> Future <CLAuthorizationStatus, Never> {
+        return Future { [weak self] promise in
+            guard let self = self else {
+              return
+            }
+            self.authorizationStatusPromise = promise
+        }
+    }
 }
-
 
 extension LocationManager: CLLocationManagerDelegate {
     
@@ -70,6 +83,26 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_: CLLocationManager, didFailWithError error: Error) {
         locationDataCheckedThrowingContinuation?.resume(throwing: error)
         locationDataCheckedThrowingContinuation = nil
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        switch manager.authorizationStatus {
+        case .notDetermined:
+            notDeterminedAuthStatus = true
+        case .authorizedWhenInUse, .authorizedAlways:
+            
+            // User just authorized access to location data for the first time.
+            if notDeterminedAuthStatus {
+                notDeterminedAuthStatus = false
+                authorizationStatusPromise?(.success(manager.authorizationStatus))
+            }
+        case .restricted, .denied:
+            authorizationStatusPromise?(.success(manager.authorizationStatus))
+        @unknown default:
+            fatalError()
+        }
+    
     }
 
 }

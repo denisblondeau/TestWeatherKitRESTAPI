@@ -34,10 +34,31 @@ class WeatherModel: ObservableObject {
     @Published private(set) var availableDataSets: Set<DataSet>?
     @Published private(set) var weatherData: Weather?
     @Published private(set) var cityName = ""
-    
+    @Published var authorizationDenied = false
+  
     private let locationManager = LocationManager()
+    private var cancellable: AnyCancellable?
     
     func getWeatherData() async {
+        
+        // Confirm that this application is authorized to access the device's location.
+        cancellable = locationManager.getAuthorizationStatus().sink(receiveCompletion: { _ in },
+                                                                    receiveValue: { authorizationStatus in
+            switch authorizationStatus {
+            case .denied, .restricted:
+                self.authorizationDenied = true
+                return
+            // If this is the first time this application receives permission to use the device's location, get the weather data.
+            case .authorizedAlways, .authorizedWhenInUse:
+                Task {
+                    await self.getWeatherData()
+                    return
+                }
+            default:
+                break
+            }
+       
+        })
         
         do {
             let locationData = try await locationManager.getLocationData()
