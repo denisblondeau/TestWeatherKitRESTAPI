@@ -26,7 +26,7 @@ struct ContentView: View {
                 VStack {
                     Text("Available Data Sets:")
                         .foregroundColor(.green)
-                    ForEach(Array(dataSets), id:\.self) { item in
+                    ForEach(Array(dataSets).sorted(), id:\.self) { item in
                         Text(item.rawValue)
                     }
                 }
@@ -41,7 +41,6 @@ struct ContentView: View {
                 Text("Current temperature in \(model.cityName):\n \(String(currentWeather.temperature))")
                     .multilineTextAlignment(.center)
                     .padding()
-                
             }
             
             if let forecastDaily = model.weatherData?.forecastDaily {
@@ -62,9 +61,16 @@ struct ContentView: View {
                     .padding()
             }
             
-            if let detailsURL = model.weatherData?.weatherAlerts?.detailsUrl {
-                Link("Weather Alerts", destination: URL(string: detailsURL)!)
-                    .padding()
+            if let detailsURL = model.weatherData?.weatherAlerts?.detailsUrl, let alertCount = model.weatherData?.weatherAlerts?.alerts.count {
+                if (alertCount > 0) {
+                    Link("\(alertCount) Weather " + (alertCount == 1 ? "Alert" : "Alerts") , destination: URL(string: detailsURL)!)
+                        .padding()
+                } else {
+                    Text("No weather alerts.")
+                        .padding()
+                    
+                }
+               
                 
             }
            

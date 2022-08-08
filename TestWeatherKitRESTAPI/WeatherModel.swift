@@ -48,7 +48,7 @@ class WeatherModel: ObservableObject {
             case .denied, .restricted:
                 self.authorizationDenied = true
                 return
-            // If this is the first time this application receives permission to use the device's location, get the weather data.
+            // If this is the first time this application receives permission to use the device's location then get the weather data.
             case .authorizedAlways, .authorizedWhenInUse:
                 Task {
                     await self.getWeatherData()
@@ -57,7 +57,6 @@ class WeatherModel: ObservableObject {
             default:
                 break
             }
-       
         })
         
         do {
@@ -100,19 +99,17 @@ class WeatherModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.availableDataSets = dataSets
                     }
-                    
-                    // Obtain weather data for the specified location and all the available data sets.
-                    for dataset in dataSets {
-                        sets += dataset.rawValue + ","
-                    }
-                    sets = String(sets.dropLast())
+                    // Convert data sets to a string so that it can be used as a querry parameter.
+                    sets = (dataSets.sorted().compactMap { dataSet in dataSet.rawValue }).joined(separator: ",")
+                  
                 }
                 
             } catch {
                 print ("*** Error retrieving weather data sets: \(error.localizedDescription)")
+                return
             }
             
-            // *** REST API documentation indicates that "countryCode" is to be used as query parameter but "country" is really the right keyword. ***
+            // *** REST API documentation indicates that "countryCode" is to be used as querry parameter but "country" is really the right keyword. ***
             guard let url = URL(string: "https://weatherkit.apple.com/api/v1/weather/\(locationData.languageTag)/\(locationData.latitude)/\(locationData.longitude)?country=\(locationData.countryCode)&dataSets=\(sets)&timezone=\(locationData.timezoneName)") else {
                 print("Error: Cannot generate a valid URL.")
                 return
@@ -132,6 +129,7 @@ class WeatherModel: ObservableObject {
             } catch {
                 
                 print ("*** Error retrieving weather data: \(error.localizedDescription)")
+                return
             }
         }
     }
@@ -156,7 +154,8 @@ func getData<T: Decodable>(for request: URLRequest, type: T, printJSON: Bool = f
     
     if printJSON {
         if let jsonString = String(data: data, encoding: .utf8) {
-            print("**** Weather data as JSON: \(jsonString)")
+            print("\n**** Weather Data as JSON (Begin) ****\n\n\(jsonString)")
+            print("\n**** Weather Data as JSON (End) ****\n")
         } else {
             print("**** CANNOT DECODE AND PRINT JSON DATA ****")
         }

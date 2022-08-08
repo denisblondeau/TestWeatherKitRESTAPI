@@ -15,7 +15,7 @@ final class LocationManager: NSObject {
     private lazy var manager = CLLocationManager()
     private var locationDataCheckedThrowingContinuation: LocationDataCheckedThrowingContinuation?
     private var authorizationStatusPromise: ((Result<CLAuthorizationStatus, Never>) -> Void)?
-    /// Set to true if the liocation access authorization stauts for this devices is not determined.
+    /// Set to true if the location access authorization status for this device is not determined.
     private var notDeterminedAuthStatus = false
     
     func getLocationData() async throws -> LocationData {
@@ -88,8 +88,10 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
         switch manager.authorizationStatus {
+            
         case .notDetermined:
             notDeterminedAuthStatus = true
+            
         case .authorizedWhenInUse, .authorizedAlways:
             
             // User just authorized access to location data for the first time.
@@ -97,8 +99,10 @@ extension LocationManager: CLLocationManagerDelegate {
                 notDeterminedAuthStatus = false
                 authorizationStatusPromise?(.success(manager.authorizationStatus))
             }
+            
         case .restricted, .denied:
             authorizationStatusPromise?(.success(manager.authorizationStatus))
+            
         @unknown default:
             fatalError()
         }

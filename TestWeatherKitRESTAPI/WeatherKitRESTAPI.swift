@@ -451,7 +451,8 @@ enum Urgency: String, Codable {
 
 // MARK: - DataSet
 /// Data sets available for the specified location.
-enum DataSet: String, Codable {
+enum DataSet: String, Codable, Comparable {
+    
     /// The current weather for the requested location.
     case currentWeather
     /// The daily forecast for the requested location.
@@ -462,6 +463,11 @@ enum DataSet: String, Codable {
     case forecastNextHour
     /// Weather alerts for the requested location.
     case weatherAlerts
+    
+    static func < (lhs: DataSet, rhs: DataSet) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+    
 }
 
 // MARK: - ProductData
