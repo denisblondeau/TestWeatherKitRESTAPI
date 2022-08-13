@@ -3,7 +3,7 @@ iOS 15.5 Demo of Apple's WeatherKit REST API - This demo retrieves all weather d
 
 Note: This demo uses a BETA API - i.e. it may break at any time... 
 
-To get started with the WeatherKit: https://developer.apple.com/weatherkit/get-started/#attribution-requirements
+To get started with the WeatherKit: https://developer.apple.com/weatherkit/get-started
 Details on the REST API: https://developer.apple.com/documentation/weatherkitrestapi
 
 You need an Apple Developer account. 
