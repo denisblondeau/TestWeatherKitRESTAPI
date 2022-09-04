@@ -1,4 +1,5 @@
 # TestWeatherKitRESTAPI
+
 iOS 15.5 Demo of Apple's WeatherKit REST API - This demo retrieves all weather datasets for your current location. 
 
 Note: This demo uses a BETA API - i.e. it may break at any time... 
@@ -13,6 +14,8 @@ Before you can run this demo, you will need the following from your Developer ac
 2) Service ID
 3) WeatherKit Key ID
 4) A private key (downloaded as .p8 file)
+
+ Rename SecureAPIKeys.xcconfig.sample to SecureAPIKeys.xcconfig and enter all previous information (i.e. Team ID, Service ID, etc.) in that file. 
 
 See https://developer.apple.com/documentation/weatherkitrestapi/request_authentication_for_weatherkit_rest_api for more details.
 

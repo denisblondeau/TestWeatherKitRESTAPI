@@ -1,0 +1,23 @@
+//
+//  SecureAPIKeys.xcconfig
+//  SonoVision
+//
+//  Created by Denis Blondeau on 2022-09-01.
+//  Copyright © 2022 Denis Blondeau. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Apple Developer's Team ID.
+TEAM_ID = YOUR TEAMID
+
+// WeatherKit Service ID
+SERVICE_ID = YOUR SERVICEID
+
+// WeatherKit Key ID.
+KEY_ID = YOUR WEATHERKIT KEY ID
+
+// Private Key extracted from the .p8 file.
+SECRET =  -----BEGIN PRIVATE KEY-----your_key_here_this_secret_must_be_a_singke_line_in_this_xcconfig_file-----END PRIVATE KEY-----
+        

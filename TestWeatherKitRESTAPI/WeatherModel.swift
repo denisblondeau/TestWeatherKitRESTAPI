@@ -19,18 +19,14 @@ class WeatherModel: ObservableObject {
     }
     
     // Apple Developer's Team ID.
-    private let teamID = "YOUR TEAMID"
+    private let teamID = (Bundle.main.infoDictionary?["TEAM_ID"] as? String) ?? "**** TEAM ID IS MISSING ****"
     // WeatherKit Service ID
-    private let serviceID = "YOUR SERVICEID"
+    private let serviceID = (Bundle.main.infoDictionary?["SERVICE_ID"] as? String) ?? "**** SERVICE ID IS MISSING ****"
     // WeatherKit Key ID.
-    private let keyID = "YOUR WEATHERKIT KEY ID"
+    private let keyID = (Bundle.main.infoDictionary?["KEY_ID"] as? String) ?? "**** KEY ID IS MISSING ****"
     // Private Key extracted from the .p8 file.
-    private let secret = """
-            PASTE EVERYTHING FROM YOUR .P8 FILE HERE
-           """
-    
-   
-    
+    private let secret = (Bundle.main.infoDictionary?["SECRET"] as? String) ?? "**** SECRET IS MISSING ****"
+
     @Published private(set) var availableDataSets: Set<DataSet>?
     @Published private(set) var weatherData: Weather?
     @Published private(set) var cityName = ""

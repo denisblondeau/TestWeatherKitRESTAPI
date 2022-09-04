@@ -17,6 +17,8 @@
 		92B4F6582860E7C800827130 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6572860E7C800827130 /* WeatherModel.swift */; };
 		92B4F65A2860E85500827130 /* WeatherKitRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */; };
 		92DBA55E28A1399500C6C577 /* SampleOutput.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DBA55D28A1399500C6C577 /* SampleOutput.png */; };
+		92E4FC4C28C5162400115AF9 /* SecureAPIKeys.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 92E4FC4A28C5162400115AF9 /* SecureAPIKeys.xcconfig */; };
+		92E4FC4D28C5162400115AF9 /* SecureAPIKeys.xcconfig.sample in Resources */ = {isa = PBXBuildFile; fileRef = 92E4FC4B28C5162400115AF9 /* SecureAPIKeys.xcconfig.sample */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,9 @@
 		92B4F6572860E7C800827130 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherKitRESTAPI.swift; sourceTree = "<group>"; };
 		92DBA55D28A1399500C6C577 /* SampleOutput.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleOutput.png; sourceTree = "<group>"; };
+		92E4FC4A28C5162400115AF9 /* SecureAPIKeys.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SecureAPIKeys.xcconfig; sourceTree = "<group>"; };
+		92E4FC4B28C5162400115AF9 /* SecureAPIKeys.xcconfig.sample */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SecureAPIKeys.xcconfig.sample; sourceTree = "<group>"; };
+		92E4FC4E28C5197B00115AF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +70,11 @@
 		92B4F6402860CA8600827130 /* TestWeatherKitRESTAPI */ = {
 			isa = PBXGroup;
 			children = (
+				92E4FC4E28C5197B00115AF9 /* Info.plist */,
 				92B4F6412860CA8600827130 /* TestWeatherKitRESTAPIApp.swift */,
 				92B4F6432860CA8600827130 /* ContentView.swift */,
+				92E4FC4A28C5162400115AF9 /* SecureAPIKeys.xcconfig */,
+				92E4FC4B28C5162400115AF9 /* SecureAPIKeys.xcconfig.sample */,
 				92B4F6572860E7C800827130 /* WeatherModel.swift */,
 				92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */,
 				928B9717288AF9EF003AFC38 /* LocationManager.swift */,
@@ -148,10 +156,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92E4FC4C28C5162400115AF9 /* SecureAPIKeys.xcconfig in Resources */,
 				92B4F6532860CD2E00827130 /* README.md in Resources */,
 				92B4F6492860CA8800827130 /* Preview Assets.xcassets in Resources */,
 				92DBA55E28A1399500C6C577 /* SampleOutput.png in Resources */,
 				92B4F6462860CA8800827130 /* Assets.xcassets in Resources */,
+				92E4FC4D28C5162400115AF9 /* SecureAPIKeys.xcconfig.sample in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +299,7 @@
 		};
 		92B4F64D2860CA8800827130 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92E4FC4A28C5162400115AF9 /* SecureAPIKeys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -298,6 +309,7 @@
 				DEVELOPMENT_TEAM = 4QRJCR224P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TestWeatherKitRESTAPI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Access is required to get weather data for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -320,6 +332,7 @@
 		};
 		92B4F64E2860CA8800827130 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92E4FC4A28C5162400115AF9 /* SecureAPIKeys.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -329,6 +342,7 @@
 				DEVELOPMENT_TEAM = 4QRJCR224P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TestWeatherKitRESTAPI/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Access is required to get weather data for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
