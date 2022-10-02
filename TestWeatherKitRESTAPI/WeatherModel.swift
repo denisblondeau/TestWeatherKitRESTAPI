@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import SwiftJWT
 
-class WeatherModel: ObservableObject {
+final class WeatherModel: ObservableObject {
     
     private struct MyClaims: Claims {
         let iss: String
@@ -62,13 +62,13 @@ class WeatherModel: ObservableObject {
             }
             await processLocationData(locationData)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
         
         func processLocationData(_ locationData: LocationData) async {
             let header = Header(kid: keyID)
             let claims = MyClaims(iss: teamID, iat: Date(), exp: Date(timeIntervalSinceNow: 60), sub: serviceID)
-            
+        
             // Create and sign the JSON Web Token (JWT).
             var myJWT = JWT(header: header, claims: claims)
             let privateKey = Data(secret.utf8)
@@ -77,6 +77,8 @@ class WeatherModel: ObservableObject {
                 print("Error: Cannot sign JSON Web Token.")
                 return
             }
+            
+            print(signedJWT)
             
             // Determine the data sets available for the specified location.
             guard let url = URL(string: "https://weatherkit.apple.com/api/v1/availability/\(locationData.latitude)/\(locationData.longitude)?country=\(locationData.countryCode)") else {

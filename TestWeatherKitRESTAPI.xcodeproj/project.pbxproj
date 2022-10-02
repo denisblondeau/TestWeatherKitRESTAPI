@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		928B9718288AF9EF003AFC38 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928B9717288AF9EF003AFC38 /* LocationManager.swift */; };
+		929F6D4528E8625E00E45704 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 929F6D4428E8625E00E45704 /* SwiftJWT */; };
 		92B4F6422860CA8600827130 /* TestWeatherKitRESTAPIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6412860CA8600827130 /* TestWeatherKitRESTAPIApp.swift */; };
 		92B4F6442860CA8600827130 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6432860CA8600827130 /* ContentView.swift */; };
 		92B4F6462860CA8800827130 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6452860CA8800827130 /* Assets.xcassets */; };
 		92B4F6492860CA8800827130 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6482860CA8800827130 /* Preview Assets.xcassets */; };
 		92B4F6532860CD2E00827130 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 92B4F6522860CD2E00827130 /* README.md */; };
-		92B4F6562860E6C100827130 /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = 92B4F6552860E6C100827130 /* SwiftJWT */; };
 		92B4F6582860E7C800827130 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6572860E7C800827130 /* WeatherModel.swift */; };
 		92B4F65A2860E85500827130 /* WeatherKitRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B4F6592860E85500827130 /* WeatherKitRESTAPI.swift */; };
 		92DBA55E28A1399500C6C577 /* SampleOutput.png in Resources */ = {isa = PBXBuildFile; fileRef = 92DBA55D28A1399500C6C577 /* SampleOutput.png */; };
@@ -42,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92B4F6562860E6C100827130 /* SwiftJWT in Frameworks */,
+				929F6D4528E8625E00E45704 /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,7 +109,7 @@
 			);
 			name = TestWeatherKitRESTAPI;
 			packageProductDependencies = (
-				92B4F6552860E6C100827130 /* SwiftJWT */,
+				929F6D4428E8625E00E45704 /* SwiftJWT */,
 			);
 			productName = TestWeatherKitRESTAPI;
 			productReference = 92B4F63E2860CA8600827130 /* TestWeatherKitRESTAPI.app */;
@@ -140,7 +140,7 @@
 			);
 			mainGroup = 92B4F6352860CA8600827130;
 			packageReferences = (
-				92B4F6542860E6C100827130 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+				929F6D4328E8625E00E45704 /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 			);
 			productRefGroup = 92B4F63F2860CA8600827130 /* Products */;
 			projectDirPath = "";
@@ -310,6 +310,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestWeatherKitRESTAPI/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Access is required to get weather data for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -343,6 +344,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestWeatherKitRESTAPI/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Access is required to get weather data for your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -387,20 +389,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		92B4F6542860E6C100827130 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+		929F6D4328E8625E00E45704 /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
+			repositoryURL = "https://github.com/Kitura/Swift-JWT";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 4.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		92B4F6552860E6C100827130 /* SwiftJWT */ = {
+		929F6D4428E8625E00E45704 /* SwiftJWT */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 92B4F6542860E6C100827130 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			package = 929F6D4328E8625E00E45704 /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
 		};
 /* End XCSwiftPackageProductDependency section */

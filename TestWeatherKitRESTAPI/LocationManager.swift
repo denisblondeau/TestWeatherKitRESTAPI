@@ -12,7 +12,7 @@ import CoreLocation
 final class LocationManager: NSObject {
     
     private typealias LocationDataCheckedThrowingContinuation = CheckedContinuation<LocationData, Error>
-    private lazy var manager = CLLocationManager()
+    private var manager = CLLocationManager()
     private var locationDataCheckedThrowingContinuation: LocationDataCheckedThrowingContinuation?
     private var authorizationStatusPromise: ((Result<CLAuthorizationStatus, Never>) -> Void)?
     /// Set to true if the location access authorization status for this device is not determined.
@@ -30,7 +30,7 @@ final class LocationManager: NSObject {
             self.manager.delegate = self
             self.manager.desiredAccuracy = kCLLocationAccuracyBest
             self.manager.requestWhenInUseAuthorization()
-            self.manager.startUpdatingLocation()
+            self.manager.requestLocation()
         })
     }
     
@@ -50,10 +50,6 @@ final class LocationManager: NSObject {
 extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        // Only need to get initial location update.
-        manager.stopUpdatingLocation()
-        manager.delegate = nil
         
         let geoCoder = CLGeocoder()
         var countryCode = ""
@@ -81,9 +77,21 @@ extension LocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_: CLLocationManager, didFailWithError error: Error) {
-        locationDataCheckedThrowingContinuation?.resume(throwing: error)
-        locationDataCheckedThrowingContinuation = nil
+        let nsError = error as NSError
+        let clError = CLError(_nsError: nsError)
+        switch clError.code {
+        case .denied:
+            self.manager.requestLocation()
+            
+        default:
+            locationDataCheckedThrowingContinuation?.resume(throwing: error)
+            locationDataCheckedThrowingContinuation = nil
+        }
+        
+       
     }
+    
+ 
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         

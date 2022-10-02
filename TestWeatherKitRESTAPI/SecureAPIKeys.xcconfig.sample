@@ -19,5 +19,5 @@ SERVICE_ID = YOUR SERVICEID
 KEY_ID = YOUR WEATHERKIT KEY ID
 
 // Private Key extracted from the .p8 file.
-SECRET =  -----BEGIN PRIVATE KEY-----your_key_here_this_secret_must_be_a_singke_line_in_this_xcconfig_file-----END PRIVATE KEY-----
+SECRET =  -----BEGIN PRIVATE KEY-----your_key_here_this_secret_must_be_a_single_line_in_this_xcconfig_file-----END PRIVATE KEY-----
         
