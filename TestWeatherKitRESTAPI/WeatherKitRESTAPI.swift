@@ -144,6 +144,15 @@ struct WeatherAlertSummary: Codable {
     let urgency: Urgency?
 }
 
+// MARK: - WeatherComparison - Ref: Undocumented API.
+struct WeatherComparison: ProductData, Codable {
+    let name: String
+    let metadata: Metadata
+    let condition: String
+    let currentValue, baselineValue: Int
+    let deviation, baselineType: String
+}
+
 // MARK: - ForecastPeriodSummary - Ref: https://developer.apple.com/documentation/weatherkitrestapi/forecastminute
 /// The summary for a specified period in the minute forecast.
 struct ForecastPeriodSummary: Codable {
@@ -461,6 +470,8 @@ enum DataSet: String, Codable, Comparable {
     case forecastHourly
     /// The next hour forecast for the requested location.
     case forecastNextHour
+    /// Undocumented dataset.
+    case trendComparison
     /// Weather alerts for the requested location.
     case weatherAlerts
     

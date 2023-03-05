@@ -1,8 +1,8 @@
 # TestWeatherKitRESTAPI
 
-iOS 15.5 Demo of Apple's WeatherKit REST API - This demo retrieves all weather datasets for your current location. 
+iOS 16.2 Demo of Apple's WeatherKit REST API - This demo retrieves all weather datasets for your current location. 
 
-Note: This demo uses a BETA API - i.e. it may break at any time... 
+Note: This demo uses the Weather REST API 1.0.0+
 
 To get started with the WeatherKit: https://developer.apple.com/weatherkit/get-started
 

@@ -78,8 +78,6 @@ final class WeatherModel: ObservableObject {
                 return
             }
             
-            print(signedJWT)
-            
             // Determine the data sets available for the specified location.
             guard let url = URL(string: "https://weatherkit.apple.com/api/v1/availability/\(locationData.latitude)/\(locationData.longitude)?country=\(locationData.countryCode)") else {
                 print("Error: Cannot generate a valid URL.")
@@ -118,7 +116,7 @@ final class WeatherModel: ObservableObject {
             // Get the data and also print out its JSON representation to the console.
             
             do {
-                if let weather = try await getData(for: urlRequest, type: self.weatherData, printJSON: true) {
+                if let weather = try await getData(for: urlRequest, type: self.weatherData) {
                     
                     DispatchQueue.main.async {
                         self.weatherData = weather
