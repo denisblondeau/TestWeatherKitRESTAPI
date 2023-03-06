@@ -26,12 +26,12 @@ final class WeatherModel: ObservableObject {
     private let keyID = (Bundle.main.infoDictionary?["KEY_ID"] as? String) ?? "**** KEY ID IS MISSING ****"
     // Private Key extracted from the .p8 file.
     private let secret = (Bundle.main.infoDictionary?["SECRET"] as? String) ?? "**** SECRET IS MISSING ****"
-
+    
     @Published private(set) var availableDataSets: Set<DataSet>?
     @Published private(set) var weatherData: Weather?
     @Published private(set) var cityName = ""
     @Published var authorizationDenied = false
-  
+    
     private let locationManager = LocationManager()
     private var cancellable: AnyCancellable?
     
@@ -44,7 +44,7 @@ final class WeatherModel: ObservableObject {
             case .denied, .restricted:
                 self.authorizationDenied = true
                 return
-            // If this is the first time this application receives permission to use the device's location then get the weather data.
+                // If this is the first time this application receives permission to use the device's location then get the weather data.
             case .authorizedAlways, .authorizedWhenInUse:
                 Task {
                     await self.getWeatherData()
@@ -65,10 +65,10 @@ final class WeatherModel: ObservableObject {
             print(error.localizedDescription)
         }
         
-        func processLocationData(_ locationData: LocationData) async {
+        @MainActor func processLocationData(_ locationData: LocationData) async {
             let header = Header(kid: keyID)
             let claims = MyClaims(iss: teamID, iat: Date(), exp: Date(timeIntervalSinceNow: 60), sub: serviceID)
-        
+            
             // Create and sign the JSON Web Token (JWT).
             var myJWT = JWT(header: header, claims: claims)
             let privateKey = Data(secret.utf8)
@@ -91,14 +91,10 @@ final class WeatherModel: ObservableObject {
             var sets = ""
             
             do {
-                if let dataSets =  try await getData(for: urlRequest, type: availableDataSets) {
-                    DispatchQueue.main.async {
-                        self.availableDataSets = dataSets
-                    }
-                    // Convert data sets to a string so that it can be used as a querry parameter.
-                    sets = (dataSets.sorted().compactMap { dataSet in dataSet.rawValue }).joined(separator: ",")
-                  
-                }
+                availableDataSets = try await getData(for: urlRequest, type: Set<DataSet>.self)
+                
+                // Convert data sets to a string so that it can be used as a querry parameter.
+                sets = (availableDataSets!.sorted().compactMap { dataSet in dataSet.rawValue }).joined(separator: ",")
                 
             } catch {
                 print ("*** Error retrieving weather data sets: \(error.localizedDescription)")
@@ -114,16 +110,10 @@ final class WeatherModel: ObservableObject {
             urlRequest.url = url
             
             // Get the data and also print out its JSON representation to the console.
-            
             do {
-                if let weather = try await getData(for: urlRequest, type: self.weatherData) {
-                    
-                    DispatchQueue.main.async {
-                        self.weatherData = weather
-                    }
-                }
-            } catch {
+                weatherData = try await getData(for: urlRequest, type: Weather.self, printJSON: true)
                 
+            } catch {
                 print ("*** Error retrieving weather data: \(error.localizedDescription)")
                 return
             }
@@ -138,7 +128,7 @@ final class WeatherModel: ObservableObject {
 ///   - type: Type of object that will get the decoded data.
 ///   - printJSON: Set to true to print out to the console the JSON data received.
 /// - Returns: Object of type T.
-func getData<T: Decodable>(for request: URLRequest, type: T, printJSON: Bool = false) async throws -> T {
+func getData<T: Decodable>(for request: URLRequest, type: T.Type, printJSON: Bool = false) async throws -> T {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
     
@@ -158,15 +148,12 @@ func getData<T: Decodable>(for request: URLRequest, type: T, printJSON: Bool = f
     }
     
     do {
-        let object = try decoder.decode(T.self, from: data)
+        let object = try decoder.decode(type, from: data)
         return object
         
     } catch {
         throw(error)
         
     }
-    
-    
-    
 }
 
